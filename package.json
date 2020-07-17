@@ -1,0 +1,58 @@
+{
+	"name": "mizah-arsiv",
+	"private": true,
+	"dependencies": {
+		"@appbaseio/reactivesearch": "3.0.0-rc.18",
+		"@material-ui/core": "^4.11.0",
+		"@material-ui/lab": "^4.0.0-alpha.56",
+		"@types/material-ui": "^0.21.7",
+		"antd": "^3.20.5",
+		"firebase": "^7.15.5",
+		"react": "^16.8.6",
+		"react-dom": "^16.8.6",
+		"react-expand-collapse": "latest",
+		"react-loader-spinner": "^3.1.14",
+		"react-router": "^5.2.0",
+		"react-router-dom": "^5.2.0",
+		"uuid": "^8.2.0"
+	},
+	"devDependencies": {
+		"@types/jest": "24.0.15",
+		"@types/node": "12.6.8",
+		"@types/react": "16.8.23",
+		"@types/react-dom": "16.8.5",
+		"@types/react-router-dom": "^5.1.5",
+		"firebase-tools": "^7.0.2",
+		"react-scripts": "3.0.1",
+		"tslint-config-prettier": "^1.18.0",
+		"tslint-react": "^4.0.0",
+		"typescript": "3.5.3"
+	},
+	"scripts": {
+		"deploy": "firebase deploy",
+		"pretest": "firebase functions:config:get > ./.runtimeconfig.json",
+		"test": "yarn workspaces run test",
+		"start": "react-scripts start",
+		"preserve": "yarn build",
+		"serve": "firebase serve",
+		"build": "react-scripts build"
+	},
+	"engines": {
+		"node": "10"
+	},
+	"workspaces": [
+		"./functions"
+	],
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
+}
