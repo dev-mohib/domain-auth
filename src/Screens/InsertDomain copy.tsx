@@ -160,7 +160,7 @@ export default function SignIn() {
       .orderByChild("domain")
       .equalTo(state.domain)
       .once("value")
-      .then((snapshot) => { 
+      .then((snapshot) => {
         setAlert(false)
         if (!snapshot.exists()) {
           db.doCreateDomain({domain : state.domain, slug : domainId, isActive : true}, domainId)

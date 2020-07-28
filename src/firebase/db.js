@@ -1,21 +1,13 @@
-//this is going to store Firebase realtime database API code
 import { db } from "./firebase";
-import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase/app";
-
-//##########3 user API
-
-//create an user and store it at users/id path (it's an asynchronous func)
 export const doCreateUser = (id, fullname, email) =>
   db.ref(`users/${id}`).set({
     fullname,
     email,
   });
-export const doCreateDomain = (domain) =>
-  db.ref(`domains`).push({
-    id: uuidv4(),
-    domain,
-  });
+export const doCreateDomain = (domainObj, domainId) =>
+// db.ref(`domains`).push({
+  db.ref(`domains/${domainId}`).set(domainObj);
 //returns all users from firebase realtime db
 export const onceGetUsers = () => db.ref("users").once("value");
 export const onceGetDomains = () => {
@@ -58,5 +50,3 @@ export const checkDomainExistsAlready = (domain) => {
 };
 
 export const doGetAnUnser = (uid) => db.ref(`users/${uid}`).once("value");
-
-// other APIs could come below

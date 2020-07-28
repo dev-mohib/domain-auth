@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import Modal from '@material-ui/core/Modal';
 import {
   DataSearch,
   MultiList,
@@ -20,34 +20,15 @@ import { useEffect } from "react";
 import withAuthorization from "../helpers/withAuthorization";
 import { db } from "../firebase";
 import { useState } from "react";
+import Navigation from "./Navigation";
+import { makeStyles } from '@material-ui/core/styles';
 
-function getNestedValue(obj: object, path: string) {
-  const keys = path.split(".");
-  const currentObject = obj;
-  const nestedValue = keys.reduce((value: any, key: string) => {
-    if (value) {
-      return value[key];
-    }
-    return "";
-  }, currentObject);
-  if (typeof nestedValue === "object") {
-    return JSON.stringify(nestedValue);
-  }
-  return nestedValue;
-}
 
-function renderItem(res: any /*, triggerClickAnalytics: any*/) {
-  let { image, url, description, title } = {
-    description: "caption",
-    image: "mediaLink",
-    title: "objectName",
-    url: "",
-  };
-  image = getNestedValue(res, image);
-  title = getNestedValue(res, title);
-  url = getNestedValue(res, url);
-  description = getNestedValue(res, description);
-  const openUrl = (urlToOpen: string) => () => window.open(urlToOpen, "_blank");
+const renderItem = (res: any /*, triggerClickAnalytics: any*/) => {
+ 
+  const image = res.mediaLink
+  const title = res.objectName
+  const openUrl = (urlToOpen: string, res : any) => () => window.open(urlToOpen, "_blank");
   return (
     <Row
       // onClick={triggerClickAnalytics}
@@ -56,10 +37,12 @@ function renderItem(res: any /*, triggerClickAnalytics: any*/) {
       key={res._id}
       style={{ margin: "20px auto", borderBottom: "1px solid #ededed" }}
     >
-      <Col span={image ? 6 : 0}>
-        {image && <img width="100" src={image} alt={title} />}
+      <Col span={image ? 14 : 0}>
+        <div onClick={() => console.log("Image clicked")}>
+          {image && <img width="400" src={res.mediaLink} alt={res.name} />}
+        </div>  
       </Col>
-      <Col span={image ? 18 : 24}>
+      <Col span={image ? 10 : 24}>
         <h3
           style={{ fontWeight: 600 }}
           dangerouslySetInnerHTML={{
@@ -69,19 +52,22 @@ function renderItem(res: any /*, triggerClickAnalytics: any*/) {
         <p
           style={{ fontSize: "1em" }}
           dangerouslySetInnerHTML={{
-            __html: description || "Choose a valid Description Field",
+            __html: res.imageDescription || "Choose a valid Description Field",
           }}
         />
       </Col>
       <div style={{ padding: "20px" }}>
-        {url ? (
-          <Button
-            shape="circle"
-            icon="link"
+          <div>
+            <Button
+              shape="circle"
+              icon="link"
+              style={{ marginRight: "5px" }}
+              onClick={openUrl(`./ViewProduct?${res._id}`, res)}
+            />
+            <Button
             style={{ marginRight: "5px" }}
-            onClick={openUrl(url)}
-          />
-        ) : null}
+            onClick={openUrl(`https://uykusuz.eu`, res)}>Purchase Issue</Button>
+        </div>
       </div>
     </Row>
   );
@@ -93,13 +79,17 @@ const Home = (props: any) => {
     username: "",
     loading: true,
   });
+  const VALUE = "SOME VALUE"
   useEffect(() => {
     const { loggedUser } = props;
     db.doGetAnUnser(loggedUser.uid).then((res: any) => {
-      setState({ users: null, username: res.val().username, loading: false });
+      setState({ users: null, username: "", loading: false });
     });
   });
   return (
+  <div>
+    <Navigation />
+    {/* <ShowModel /> */}
     <ReactiveBase
       app="archive"
       credentials="user:meuP4b1U4L2Y"
@@ -108,13 +98,13 @@ const Home = (props: any) => {
       searchStateHeader={true}
     >
       <Row gutter={16} style={{ padding: 20 }}>
-        <Col span={12}>
+        <Col span={10}>
           <Card>
             <MultiList
               showCheckbox={true}
               componentId="list-2"
               dataField="artist.keyword"
-              size={100}
+              size={1000}
               style={{
                 marginBottom: 20,
               }}
@@ -123,7 +113,7 @@ const Home = (props: any) => {
             />
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={14}>
           <DataSearch
             autosuggest={false}
             componentId="search"
@@ -171,8 +161,9 @@ const Home = (props: any) => {
         </Col>
       </Row>
     </ReactiveBase>
-  );
-};
+  </div>
+  )
+}
 const authCondition = (authUser: any) => !!authUser;
 
 export default withAuthorization(authCondition)(Home); //grants authorization to open endpoint if an user is signed in

@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 // import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -16,6 +14,8 @@ import { Link } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router";
 import firebase from "firebase/app";
+import { functions } from 'firebase'
+import Navigation from './Navigation'
 
 function Copyright() {
   return (
@@ -67,7 +67,7 @@ export default function SignUp() {
 
   const handleChange = (event: any) => {
     const value = event.target.value;
-    const name = event.target.name;
+    // const name = event.target.name;
     // console.log(event.target.name, state);
 
     setState({
@@ -96,8 +96,7 @@ export default function SignUp() {
       .once("value")
       .then((snapshot) => {
         if (snapshot.exists()) {
-          let userData = snapshot.val();
-          console.log("exist.............................", userData);
+          // let userData = snapshot.val();
           auth
             .doCreateUserWithEmailAndPassword(email, password)
             //it the above functions resolves, reset the state to its initial state values, otherwise, set the error object
@@ -108,6 +107,10 @@ export default function SignUp() {
                   setState({
                     ...INITIAL_STATE,
                   });
+                  // const addAdmin = firebase.functions().httpsCallable('addAdmin')
+                  // addAdmin('test').then((res) => {
+                  //   console.log(res)
+                  // })
                   history.push({ pathname: "/home" });
                   return
                 })
@@ -138,6 +141,8 @@ export default function SignUp() {
       });
   };
   return (
+    <div>
+      <Navigation />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       {alert && (
@@ -231,5 +236,6 @@ export default function SignUp() {
         <Copyright />
       </Box>
     </Container>
+  </div>
   );
 }

@@ -3,20 +3,17 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import { useHistory } from "react-router";
 import { Alert, AlertTitle } from "@material-ui/lab";
-
+import Navigation from './Navigation'
+import firebase from 'firebase'
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -60,6 +57,11 @@ export default function SignIn() {
       [event.target.name]: value,
     });
   };
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged(async user => {
+      if(user) history.push({ pathname: "/home" })
+  }) 
+  },[])
   const onSubmit = (event: any) => {
     const { email, password } = state;
 
@@ -90,6 +92,8 @@ export default function SignIn() {
   };
 
   return (
+    <div>
+      <Navigation />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       {alert && (
@@ -151,5 +155,6 @@ export default function SignIn() {
         </form>
       </div>
     </Container>
+  </div>
   );
 }

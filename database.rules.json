@@ -1,6 +1,14 @@
 {
-	"rules": {
-		".read": true,
-		".write": false
-	}
+  "rules": {
+    "domains": {
+      ".read" : true,
+      ".write": "auth.uid == 'GA1STmDPYTYcsDMN4KrMXksMfZl2'"
+    },
+    "users": {
+      ".read" : "auth.uid !== null",
+      "$uid": {
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
 }

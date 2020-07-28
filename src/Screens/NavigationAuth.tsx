@@ -13,6 +13,12 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Link from '@material-ui/core/Link'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Button from '@material-ui/core/Button'
+import { useHistory } from 'react-router-dom'
+import firebase from 'firebase'
+
 // import MenuIcon from "@material-ui/icons/Menu";
 // import SearchIcon from "@material-ui/icons/Search";
 // import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -30,11 +36,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
+      fontSize : 22,
+      fontWeight : 'bold',
       display: "none",
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
     },
+
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
@@ -89,12 +98,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function PrimarySearchAppBar(props: any) {
   const classes = useStyles();
+  const history = useHistory()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
     mobileMoreAnchorEl,
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null);
+  const [isAdmin, setAdmin ] = React.useState<Boolean>(false)
+React.useEffect(() => {
 
+  firebase.auth().onAuthStateChanged(async user => {
+    if (user)
+    {
+      if(user.uid == 'GA1STmDPYTYcsDMN4KrMXksMfZl2')
+        setAdmin(true)
+        else
+        setAdmin(false)
+    }
+}) 
+},[])
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -182,8 +204,17 @@ export default function PrimarySearchAppBar(props: any) {
             {/* <MenuIcon /> */}
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            App Master
+           <a style={{color : 'white'}} href="/">Mizaharsiv.org</a>
           </Typography>
+          { isAdmin ?
+            <div style={{marginLeft : 30}}>
+            <ButtonGroup variant="text" color="default" aria-label="text primary button group">
+              <Button onClick={() => history.push({ pathname: "/insert" })} style={{color : 'white'}}>Insert Domain</Button>
+              <Button onClick={() => history.push({ pathname: "/addImage" })} style={{color : 'white'}}>Add Images</Button>
+              <Button onClick={() => history.push({ pathname: "/users" })} style={{color : 'white'}}>Users</Button>
+            </ButtonGroup>
+            </div> : null
+          }
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {props.userInfo && <SignOutButton />}

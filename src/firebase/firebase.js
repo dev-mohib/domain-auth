@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
-
+import "firebase/functions"
 //this config is being used for both development and production environment. Though, it is a best practice creating a second project and have two configs: one for production (prodConfig) and another for development (devConfig), so you choose the config based on the environment.
 /*
 const config = {
@@ -16,14 +16,13 @@ const config = {
 }; */
 
 const config = {
-  apiKey: "AIzaSyAx_f3T2cKO11FJxbNMyOO3cS3ZPEFbmEI",
-  authDomain: "domain-app-fbe04.firebaseapp.com",
-  databaseURL: "https://domain-app-fbe04.firebaseio.com",
-  projectId: "domain-app-fbe04",
-  storageBucket: "domain-app-fbe04.appspot.com",
-  messagingSenderId: "303396713920",
-  appId: "1:303396713920:web:8e7c6927d2bd2f8afe0425",
-  measurementId: "G-TQJ7TQPNCM"
+  apiKey: "AIzaSyDhnucxk3wUfDY7NSM8TGIY53zKukRHIWE",
+  authDomain: "valiant-index-243410.firebaseapp.com",
+  databaseURL: "https://valiant-index-243410.firebaseio.com",
+  projectId: "valiant-index-243410",
+  storageBucket: "valiant-index-243410.appspot.com",
+  messagingSenderId: "295406841277",
+  appId: "1:295406841277:web:21470cf0d4d1daaa21f6d4"
 };
 
 if (!firebase.apps.length) {
@@ -31,6 +30,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
+// firebase.functions().useFunctionsEmulator('http://localhost:3001');
 //separting database API and authentication
 const db = firebase.database();
 const auth = firebase.auth();

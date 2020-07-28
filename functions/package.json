@@ -1,44 +1,25 @@
 {
-	"name": "functions",
-	"version": "1.0.0",
-	"scripts": {
-		"lint": "tslint --project ./tsconfig.json --config ./tslint.json",
-		"build": "tsc --project ./tsconfig.json",
-		"preserve": "yarn build",
-		"serve": "firebase serve --only functions",
-		"preshell": "yarn build",
-		"shell": "firebase experimental:functions:shell",
-		"start": "yarn shell",
-		"deploy": "firebase deploy --only functions",
-		"postdeploy": "npm-run-all -pl postdeploy:*",
-		"postdeploy:hello-world:": "gcloud functions deploy helloWorld --region='europe-west1' --update-env-vars='NODE_DEBUG=functions*'",
-		"postdeploy:handle-upload:": "gcloud functions deploy handleUpload --region='europe-west1' --update-env-vars='NODE_DEBUG=functions*'",
-		"postdeploy:handle-metadata-update:": "gcloud functions deploy handleMetadataUpdate --region='europe-west1' --update-env-vars='NODE_DEBUG=functions*'",
-		"logs": "firebase functions:log",
-		"pretest": "firebase functions:config:get > ./.runtimeconfig.json",
-		"test": "NODE_DEBUG=functions* yarn shell < ./src/test.js"
-	},
-	"engines": {
-		"node": "10"
-	},
-	"main": "lib/index.js",
-	"dependencies": {
-		"@elastic/elasticsearch": "^7.2.0",
-		"@google-cloud/storage": "^3.0.3",
-		"exiftool-vendored": "^8.17.0",
-		"firebase-admin": "^8.2.0",
-		"firebase-functions": "^3.0.0",
-		"lodash": "^4.17.14",
-		"supports-color": "^7.0.0"
-	},
-	"devDependencies": {
-		"@firebase/app-types": "^0.4.0",
-		"@types/luxon": "^1.15.2",
-		"@types/exif": "^0.6.0",
-		"@types/supports-color": "^5.3.0",
-		"npm-run-all": "^4.1.5",
-		"tslint": "^5.12.0",
-		"typescript": "^3.2.2"
-	},
-	"private": true
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "firebase-admin": "^8.0.0",
+    "firebase-functions": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
 }
