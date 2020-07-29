@@ -3,17 +3,6 @@ import "firebase/auth";
 import "firebase/database";
 import "firebase/functions"
 //this config is being used for both development and production environment. Though, it is a best practice creating a second project and have two configs: one for production (prodConfig) and another for development (devConfig), so you choose the config based on the environment.
-/*
-const config = {
-  apiKey: "AIzaSyAr5inSxEiWFT7ckRzPDna8N68DqMLelm0",
-  authDomain: "login-register-85dd0.firebaseapp.com",
-  databaseURL: "https://login-register-85dd0.firebaseio.com",
-  projectId: "login-register-85dd0",
-  storageBucket: "login-register-85dd0.appspot.com",
-  messagingSenderId: "24475912936",
-  appId: "1:24475912936:web:d654972ca956b99696175d",
-  measurementId: "G-74SX017P8J",
-}; */
 
 const config = {
   apiKey: "YOUR API KEY",
