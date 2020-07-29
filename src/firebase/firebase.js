@@ -16,7 +16,7 @@ const config = {
 }; */
 
 const config = {
-  apiKey: "AIzaSyDhnucxk3wUfDY7NSM8TGIY53zKukRHIWE",
+  apiKey: "YOUR API KEY",
   authDomain: "valiant-index-243410.firebaseapp.com",
   databaseURL: "https://valiant-index-243410.firebaseio.com",
   projectId: "valiant-index-243410",
